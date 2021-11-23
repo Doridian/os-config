@@ -39,5 +39,10 @@ for screenSetup in SETUP:
         if "size_inches" in screenSetup["match"] and screenState["size_inches"] != screenSetup["match"]["size_inches"]:
             continue
         cmdline.append(f'id:{screenState["id"]["persistent"]} {screenSetup["target"]}')
+        screenState["has_match"] = True
+
+for screenState in currentState:
+    if "has_match" not in screenState:
+        print(f'No screen match found for size_inches:{screenState["size_inches"]} built_in:{screenState["built_in"]}')
 
 call(cmdline)
