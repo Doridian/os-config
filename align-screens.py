@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
+from argparse import ArgumentParser
 
-DISPLAYPLACER = "displayplacer"
+parser = ArgumentParser()
+parser.add_argument('--binary', dest='binary', default='displayplacer')
+parser.add_argument('--hz', dest='refresh_rate', default=120, type=float)
+args = parser.parse_args()
+REFRESH_RATE = args.refresh_rate
+DISPLAYPLACER = args.binary
 
 from subprocess import check_output, call
 from yaml import load, SafeLoader
@@ -12,21 +18,21 @@ SETUP = [
         "match": {
             "built_in": True,
         },
-        "target": "res:3456x2234 scaled:1728x1117 pixel_encoding:--------RRRRRRRRGGGGGGGGBBBBBBBB origin:(3840,0) degree:0 hz:120.000000",
+        "target": "origin:(3840,0) degree:0",
     },
     {
         "match": {
             "built_in": False,
             "size_inches": 32, # Actually 27, but LG...
         },
-        "target": "res:2560x1440 scaled:2560x1440 pixel_encoding:--------RRRRRRRRGGGGGGGGBBBBBBBB origin:(-2560,0) degree:0 hz:120.000000",
+        "target": f"res:2560x1440 scaled:2560x1440 pixel_encoding:--------RRRRRRRRGGGGGGGGBBBBBBBB origin:(-2560,0) degree:0 hz:{REFRESH_RATE}",
     },
     {
         "match": {
             "built_in": False,
             "size_inches": 38,
         },
-        "target": "res:3840x1600 scaled:3840x1600 pixel_encoding:--------RRRRRRRRGGGGGGGGBBBBBBBB origin:(0,0) degree:0 hz:120.000000",
+        "target": f"res:3840x1600 scaled:3840x1600 pixel_encoding:--------RRRRRRRRGGGGGGGGBBBBBBBB origin:(0,0) degree:0 hz:{REFRESH_RATE}",
     }
 ]
 
